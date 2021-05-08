@@ -7,6 +7,13 @@ import html from 'remark-html';
 
 const postsDirectory = path.join( process.cwd(), 'posts' )
 
+type IPost = {
+  id: string;
+  date: string;
+  title: string;
+  [key: string]: any;
+}
+
 export function getSortedPostsData () {
   // Get file names under /posts
   const fileNames = fs.readdirSync( postsDirectory )
@@ -28,8 +35,8 @@ export function getSortedPostsData () {
     }
   } )
   // Sort posts by date
-  return allPostsData.sort( ( a, b ) => {
-    if ( a.date < b.date ) {
+  return allPostsData.sort((a: IPost, b: IPost) => {
+    if ( a?.date < b?.date ) {
       return 1
     } else {
       return -1
@@ -62,7 +69,7 @@ export function getAllPostIds () {
   } )
 }
 
-export async function getPostData ( id ) {
+export async function getPostData (id: string) {
   const fullPath = path.join( postsDirectory, `${id}.md` )
   const fileContents = fs.readFileSync( fullPath, 'utf8' )
 
@@ -79,6 +86,6 @@ export async function getPostData ( id ) {
   return {
     id,
     contentHtml,
-    ...matterResult.data
+    ...(matterResult.data as IPost)
   }
 }

@@ -8,7 +8,10 @@ import styles from './layout.module.css';
 const name = 'Poppy'
 export const siteTitle = 'Learn Next.js'
 
-export default function Layout ( { children, home } ) {
+export default function Layout (
+  { children, home = false }:
+  { children: React.ReactNode, home?: boolean }
+) {
   return (
     <div className={styles.container}>
       <Head>

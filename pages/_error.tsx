@@ -1,4 +1,6 @@
-function Error ( { statusCode } ) {
+import { ErrorProps } from 'next/error';
+
+const ErrorComponent = ({ statusCode }: ErrorProps) => {
   return (
     <p>
       {statusCode
@@ -8,9 +10,9 @@ function Error ( { statusCode } ) {
   )
 }
 
-Error.getInitialProps = ( { res, err } ) => {
+ErrorComponent.getInitialProps = ({ res, err }) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
   return { statusCode }
 }
 
-export default Error
+export default ErrorComponent
